@@ -59,6 +59,8 @@ _messageController.clear();
       _chatScrollController
           .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
     }
+    setState(() { });
+
   }
 
   syncFirstF() async {

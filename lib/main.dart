@@ -9,7 +9,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:cloudinary_flutter/cloudinary_context.dart';
 import 'package:cloudinary_url_gen/cloudinary.dart';
-import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 
 // import 'src/app.dart';
 // import 'src/settings/settings_controller.dart';
