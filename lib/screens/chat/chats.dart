@@ -54,14 +54,11 @@ class _ChatsPageState extends State<ChatsPage> {
       "uid": p.userProfile.uid,
       "profileImage": p.userProfile.profileImage,
     });
-
-    // if(mounted) {
-    // _messageController.clear();
-    // _chatScrollController.animateTo(
-    //   _chatScrollController.position.maxScrollExtent,
-    //   duration: const Duration(milliseconds: 300),
-    //   curve: Curves.easeOut,
-    // );}
+_messageController.clear();
+ if (_chatScrollController.hasClients) {
+      _chatScrollController
+          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
+    }
   }
 
   syncFirstF() async {
@@ -140,6 +137,10 @@ class _ChatsPageState extends State<ChatsPage> {
                       "uid": p.userProfile.uid,
                       "profileImage": p.userProfile.profileImage,
                     });
+                     if (_chatScrollController.hasClients) {
+      _chatScrollController
+          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
+    }
                   },
                   child: Text('yes')),
             ],
@@ -147,80 +148,15 @@ class _ChatsPageState extends State<ChatsPage> {
             insetAnimationDuration: const Duration(seconds: 2),
           );
         });
+        
   }
 
   WaveformRecorderController waveController = WaveformRecorderController();
-  final player = AudioPlayer();
 
   @override
   void dispose() {
     waveController.dispose();
-    player.dispose();
     super.dispose();
-  }
-
-  bool isPlaying = false;
-  bool isPaused = false;
-  bool isLoading = false;
-  String audioUrl = "";
-  double position = 0.0; // Current position
-  double duration = 0.0; // Total duration
-
-  void play(String url) {
-    if (audioUrl != url) {
-      audioUrl = url;
-      stop(); // Ensure previous audio is stopped before playing a new one
-    }
-    if (!isPlaying) {
-      updatePositionAndDuration();
-      player.play(UrlSource(audioUrl));
-      setState(() {
-        isPlaying = true;
-        isPaused = false;
-      });
-    } else {
-      pause();
-    }
-  }
-
-  void pause() {
-    if (isPlaying) {
-      player.pause();
-      setState(() {
-        isPlaying = false;
-        isPaused = true;
-      });
-    }
-  }
-
-  void stop() {
-    player.stop();
-    setState(() {
-      isPlaying = false;
-      isPaused = false;
-    });
-  }
-
-  void updatePositionAndDuration() {
-    player.onPositionChanged.listen((position) {
-      setState(() {
-        this.position = position.inMilliseconds.toDouble(); // Update position
-      });
-    });
-
-    player.onDurationChanged.listen((duration) {
-      setState(() {
-        this.duration = duration.inMilliseconds.toDouble(); // Update duration
-      });
-    });
-    //  player.onLog.listen((isBuffering) {
-    //     isLoading = isBuffering.isNotEmpty;
-    //     setState(() {});
-    //  });
-  }
-
-  onSeekChanged(v) {
-    player.seek(Duration(milliseconds: v.toInt())); // Seek to the new position
   }
 
   @override
@@ -364,41 +300,24 @@ class _ChatsPageState extends State<ChatsPage> {
                                                               .toNullString() !=
                                                           ""
                                                       ? SizedBox(
-                                                          width: 340,
-                                                          child:
-                                                              BubbleNormalAudio(
-                                                            color: Color(
-                                                                0xFFE8E8EE),
-                                                            duration: duration /
-                                                                1000, // Pass the total duration
-                                                            position: position /
-                                                                1000, // Pass the current position
-                                                            isPlaying:
-                                                                isPlaying,
-                                                            isLoading:
-                                                                isLoading,
-                                                            isPause: isPaused,
-                                                            onSeekChanged: (v) {
-                                                              debugPrint(
-                                                                  "seek: $v");
-                                                              onSeekChanged(v);
-                                                            },
-                                                            onPlayPauseButtonClick:
-                                                                () {
-                                                              debugPrint(
-                                                                  "onPlayPauseButtonClick: ");
-                                                              play(chat['voice']
+                                                          width: MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                          child: VoiceWidget(
+                                                              url: chat['voice']
                                                                   .toString()
-                                                                  .toNullString());
-                                                            },
-                                                            sent: true,
-                                                          ))
+                                                                  .toNullString()))
                                                       : chat['file']
                                                                   .toString()
                                                                   .toNullString() !=
                                                               ""
                                                           ? SizedBox(
-                                                              width: 200,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.45,
                                                               height: 120,
                                                               child:
                                                                   BubbleNormalImage(
@@ -446,12 +365,8 @@ class _ChatsPageState extends State<ChatsPage> {
                                                                   color: AppColors
                                                                       .primaryColor
                                                                       .shade700,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
+                                                                  fontStyle: FontStyle.italic,
+                                                                  fontWeight: FontWeight.bold)),
                                                   InkWell(
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -508,13 +423,15 @@ class _ChatsPageState extends State<ChatsPage> {
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
+                                        SizedBox(width: 20),
                                         InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(50),
                                             onTap: () {
                                               waveController.stopRecording();
+                                              isCanceled = true;
                                             },
                                             child: const Icon(
                                               Icons.cancel,
@@ -588,15 +505,20 @@ class _ChatsPageState extends State<ChatsPage> {
 
   //////////////////
 
-  Future<void> toggleRecording() => switch (waveController.isRecording) {
-        true => waveController.stopRecording(),
-        false => waveController.startRecording()
-      };
+  bool isCanceled = false;
+  void toggleRecording() {
+    if (waveController.isRecording) {
+      waveController.stopRecording();
+    } else {
+      waveController.startRecording();
+    }
+    isCanceled = false;
+  }
 
   Future<void> onRecordingStopped(p) async {
     try {
       final file = waveController.file;
-      if (file == null) return;
+      if (file == null || isCanceled) return;
 
       debugPrint("👉 file: $file");
 
@@ -637,5 +559,112 @@ class _ChatsPageState extends State<ChatsPage> {
     } catch (e, st) {
       debugPrint("💥 when voice uploading $e $st");
     }
+    if (_chatScrollController.hasClients) {
+      _chatScrollController
+          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
+    }
+  }
+}
+
+class VoiceWidget extends StatefulWidget {
+  final String url;
+  const VoiceWidget({super.key, required this.url});
+
+  @override
+  State<VoiceWidget> createState() => _VoiceWidgetState();
+}
+
+class _VoiceWidgetState extends State<VoiceWidget> {
+  final player = AudioPlayer();
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  bool isPlaying = false;
+  bool isPaused = false;
+  bool isLoading = false;
+  String audioUrl = "";
+  double position = 0.0; // Current position
+  double duration = 0.0; // Total duration
+
+  void play(String url) {
+    if (audioUrl != url) {
+      audioUrl = url;
+      stop(); // Ensure previous audio is stopped before playing a new one
+    }
+    if (!isPlaying) {
+      updatePositionAndDuration();
+      player.play(UrlSource(audioUrl));
+      setState(() {
+        isPlaying = true;
+        isPaused = false;
+      });
+    } else {
+      pause();
+    }
+  }
+
+  void pause() {
+    if (isPlaying) {
+      player.pause();
+      setState(() {
+        isPlaying = false;
+        isPaused = true;
+      });
+    }
+  }
+
+  void stop() {
+    player.stop();
+    setState(() {
+      isPlaying = false;
+      isPaused = false;
+    });
+  }
+
+  void updatePositionAndDuration() {
+    player.onPositionChanged.listen((position) {
+      setState(() {
+        this.position = position.inMilliseconds.toDouble(); // Update position
+      });
+    });
+
+    player.onDurationChanged.listen((duration) {
+      setState(() {
+        this.duration = duration.inMilliseconds.toDouble(); // Update duration
+      });
+    });
+    //  player.onLog.listen((isBuffering) {
+    //     isLoading = isBuffering.isNotEmpty;
+    //     setState(() {});
+    //  });
+  }
+
+  onSeekChanged(v) {
+    player.seek(Duration(milliseconds: v.toInt())); // Seek to the new position
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BubbleNormalAudio(
+      color: Color(0xFFE8E8EE),
+      duration: duration / 1000, // Pass the total duration
+      position: position / 1000, // Pass the current position
+      isPlaying: isPlaying,
+      isLoading: isLoading,
+      isPause: isPaused,
+      onSeekChanged: (v) {
+        debugPrint("seek: $v");
+        onSeekChanged(v);
+      },
+      onPlayPauseButtonClick: () {
+        debugPrint("onPlayPauseButtonClick: ");
+        play(widget.url);
+      },
+      sent: true,
+    );
   }
 }
