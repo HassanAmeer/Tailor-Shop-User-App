@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'package:cloudinary/cloudinary.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tailershop/constants/appColors.dart';
 import 'package:tailershop/constants/appImages.dart';
@@ -13,10 +11,8 @@ import '../../widgets/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import '../screens/homepage.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../widgets/toast.dart';
-import 'login.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -26,9 +22,10 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class Edit_ProfilePageState extends State<EditProfilePage> {
-  final emailContr = TextEditingController();
-  final nameContr = TextEditingController();
-  final phoneContr = TextEditingController();
+  TextEditingController emailContr = TextEditingController();
+  TextEditingController nameContr = TextEditingController();
+  TextEditingController phoneContr = TextEditingController();
+  TextEditingController schoolNameContr = TextEditingController();
 
   bool isEditing = false;
   XFile? _profileImage;
@@ -37,6 +34,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
   // Initial values for comparison
   String? name;
   String? phone;
+  String? schoolName;
   String? email;
   String? initialProfileImagePath;
 
@@ -68,6 +66,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
           nameContr.text = name = data['name'] ?? '';
           phoneContr.text = phone = data['phone'] ?? '';
           emailContr.text = email = data['email'] ?? '';
+          schoolNameContr.text = schoolName = data['schoolName'] ?? '';
 
           initialProfileImagePath =
               prefs.getString('profileImage') ?? data['profileImage'];
@@ -142,6 +141,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
     return nameContr.text != name ||
         phoneContr.text != phone ||
         emailContr.text != email ||
+        schoolNameContr.text != email ||
         (_profileImage != null &&
             _profileImage?.path != initialProfileImagePath);
   }
@@ -165,6 +165,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
       'name': nameContr.text,
       'phone': phoneContr.text,
       'email': emailContr.text,
+      'schoolName': schoolNameContr.text,
       'profileImage': imageUrl ?? initialProfileImagePath,
     };
 
@@ -180,6 +181,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
       isEditing = false;
       name = nameContr.text;
       phone = phoneContr.text;
+      schoolName = schoolNameContr.text;
       email = emailContr.text;
       initialProfileImagePath = imageUrl ?? initialProfileImagePath;
     });
@@ -271,6 +273,7 @@ class Edit_ProfilePageState extends State<EditProfilePage> {
                 const SizedBox(height: 20),
                 buildProfileField("Name", nameContr, isEditing),
                 buildProfileField("Phone Number", phoneContr, isEditing),
+                buildProfileField("School Name", schoolNameContr, isEditing),
                 buildProfileField("Email", emailContr, isEditing,
                     isReadOnly: true),
                 const SizedBox(height: 20),
@@ -345,9 +348,9 @@ class MainButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(14.0),
           gradient: LinearGradient(
             colors: [
-              Colors.indigoAccent.withOpacity(0.9),
+              AppColors.primaryColor.withOpacity(0.9),
               // Colors.indigo.withOpacity(0.7),
-              Color.fromARGB(255, 70, 5, 210).withOpacity(0.7),
+              AppColors.primaryColor.shade900.withOpacity(0.7),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

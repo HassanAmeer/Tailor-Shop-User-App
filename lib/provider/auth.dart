@@ -33,6 +33,7 @@ class AuthVm with ChangeNotifier {
         prefs.getString(UserStorage.profileImageKey).toString();
     final name = prefs.getString(UserStorage.nameKey).toString();
     final phone = prefs.getString(UserStorage.phoneKey).toString();
+    final schoolName = prefs.getString(UserStorage.phoneKey).toString();
     final email = prefs.getString(UserStorage.emailKey).toString();
     final password = prefs.getString(UserStorage.passKey).toString();
     _user = AuthModel.fromJson({
@@ -41,6 +42,7 @@ class AuthVm with ChangeNotifier {
       "name": name,
       "email": email,
       "phone": phone,
+      "schoolName": schoolName,
       "password": password
     });
     notifyListeners();
@@ -131,6 +133,7 @@ class AuthVm with ChangeNotifier {
     context, {
     String name = "",
     String phone = "",
+    String schoolName = "",
     String email = "",
     String password = "",
   }) async {
@@ -175,6 +178,7 @@ class AuthVm with ChangeNotifier {
         'name': name,
         'email': email,
         'phone': phone,
+        'schoolName': schoolName,
         'password': password,
         'uid': userCredential.user!.uid,
       });

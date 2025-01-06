@@ -29,8 +29,8 @@ class _LoginPageState extends State<LoginPage> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: AppColors.primaryColor,
-              title: const Text('Cloud Storage',
-                  style: TextStyle(color: Colors.white))),
+              title:
+                  const Text('Tailor', style: TextStyle(color: Colors.white))),
           body: Center(
               child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -40,15 +40,22 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CachedNetworkImage(
+                              width: 180,
                               imageUrl: p.app_icon.toString(),
                               placeholder: (context, url) => Padding(
                                   padding: const EdgeInsets.only(right: 14),
                                   child: SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: const CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: AppColors.primaryColor))),
+                                      width: 150,
+                                      height: 150,
+                                      child: Icon(Icons.image,
+                                              size: 140,
+                                              color: Colors.grey.shade100)
+                                          .animate(
+                                              onPlay: (controller) =>
+                                                  controller.repeat())
+                                          .shimmer(
+                                              color: Colors.grey.shade300,
+                                              duration: Duration(seconds: 2)))),
                               errorWidget: (context, url, error) => Image.asset(
                                   AppImages.logo,
                                   width:

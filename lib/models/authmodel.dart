@@ -6,6 +6,7 @@ class AuthModel {
   String name;
   String email;
   String phone;
+  String schoolName;
   String password;
 
   AuthModel({
@@ -14,6 +15,7 @@ class AuthModel {
     this.name = "",
     this.email = "",
     this.phone = "",
+    this.schoolName = "",
     this.password = "",
   });
 
@@ -25,6 +27,7 @@ class AuthModel {
       email: json['email'].toString().toNullString(),
       password: json['password'].toString().toNullString(),
       phone: json['phone'].toString().toNullString(),
+      schoolName: json['schoolName'].toString().toNullString(),
     );
   }
 
@@ -35,6 +38,7 @@ class AuthModel {
       'name': name,
       'email': email,
       'phone': phone,
+      'schoolName': schoolName,
       'password': password,
     };
   }

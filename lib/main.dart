@@ -8,12 +8,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:cloudinary_flutter/cloudinary_context.dart';
-import 'package:cloudinary_flutter/image/cld_image.dart';
 import 'package:cloudinary_url_gen/cloudinary.dart';
+import 'package:agora_chat_sdk/agora_chat_sdk.dart';
 
 // import 'src/app.dart';
 // import 'src/settings/settings_controller.dart';
 // import 'src/settings/settings_service.dart';
+
+class AgoraChatConfig {
+  static const String appKey = "511278b4bc1d45fcbdcab26f62146843";
+  static const String userId = "<#Your created user#>";
+  static const String agoraToken = "<#User Token#>";
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

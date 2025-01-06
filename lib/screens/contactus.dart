@@ -6,6 +6,8 @@ import 'package:tailershop/provider/auth.dart';
 import 'package:direct_call_plus/direct_call_plus.dart';
 
 class ContactUsPage extends StatelessWidget {
+  const ContactUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthVm>(builder: (context, p, c) {
@@ -19,7 +21,7 @@ class ContactUsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${p.contact_us_text}',
+                  p.contact_us_text,
                   style: GoogleFonts.laila(fontSize: 18, color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
@@ -34,7 +36,7 @@ class ContactUsPage extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            '${p.contact_us_number}',
+                            p.contact_us_number,
                             style: TextStyle(fontSize: 16),
                           ),
                         ],

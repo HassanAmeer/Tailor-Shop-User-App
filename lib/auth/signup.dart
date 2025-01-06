@@ -19,6 +19,7 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController schoolNameContr = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   bool showPass = false;
@@ -90,6 +91,18 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: schoolNameContr,
+                    decoration: InputDecoration(
+                      hintText: 'School Name',
+                      prefixIcon: const Icon(Icons.school, color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
                     controller: passwordController,
                     obscureText: showPass,
                     decoration: InputDecoration(
@@ -123,6 +136,7 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: () {
                           p.signupF(context,
                               email: emailController.text,
+                              schoolName: schoolNameContr.text,
                               password: passwordController.text,
                               name: nameController.text,
                               phone: phoneController.text);

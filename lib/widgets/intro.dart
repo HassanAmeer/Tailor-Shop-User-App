@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:tailershop/constants/appColors.dart';
 import 'package:tailershop/provider/auth.dart';
-import 'package:tailershop/widgets/dotloader.dart';
 import '../auth/login.dart';
 import '../constants/appImages.dart';
 import '../storage/config.dart';
@@ -54,7 +54,8 @@ class _IntroPageState extends State<IntroPage> {
                                     curve: Curves.ease);
                               },
                               child: const Text('Prev',
-                                  style: TextStyle(color: Colors.indigo)))
+                                  style:
+                                      TextStyle(color: AppColors.primaryColor)))
                         else
                           const SizedBox(width: 60),
                         Row(
@@ -68,7 +69,7 @@ class _IntroPageState extends State<IntroPage> {
                                         height: 10,
                                         decoration: BoxDecoration(
                                             color: _currentIndex == index
-                                                ? Colors.indigo
+                                                ? AppColors.primaryColor
                                                 : Colors.grey[300],
                                             shape: BoxShape.circle))))),
                         if (_currentIndex < p.introData.length - 1)
@@ -79,7 +80,8 @@ class _IntroPageState extends State<IntroPage> {
                                     curve: Curves.ease);
                               },
                               child: const Text('Next',
-                                  style: TextStyle(color: Colors.indigo)))
+                                  style:
+                                      TextStyle(color: AppColors.primaryColor)))
                         else
                           const SizedBox(width: 60)
                       ]),
@@ -94,7 +96,7 @@ class _IntroPageState extends State<IntroPage> {
                                   builder: (context) => const LoginPage()));
                             },
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.indigo,
+                                backgroundColor: AppColors.primaryColor,
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
                                 shape: RoundedRectangleBorder(
@@ -141,7 +143,7 @@ class _IntroPageItem extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.indigo),
+                  color: AppColors.primaryColor),
               textAlign: TextAlign.center),
 
           const SizedBox(height: 15),

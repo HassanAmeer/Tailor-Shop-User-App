@@ -4,7 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tailershop/models/itemModel.dart';
 
 import '../constants/appColors.dart';
-import 'chats.dart';
+import 'chat/chats.dart';
 
 class ItemsDetailsPage extends StatelessWidget {
   final ItemModel data;
@@ -45,7 +45,7 @@ class ItemsDetailsPage extends StatelessWidget {
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.image))),
               const SizedBox(height: 16.0),
-              Text('${data.title}',
+              Text(data.title,
                       style:
                           TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
                   .animate(onPlay: (controller) => controller.repeat())
@@ -53,7 +53,7 @@ class ItemsDetailsPage extends StatelessWidget {
                       color: Colors.white,
                       duration: const Duration(seconds: 2)),
               const SizedBox(height: 20),
-              Text('${data.desc}', style: TextStyle(fontSize: 16)),
+              Text(data.desc, style: TextStyle(fontSize: 16)),
               const SizedBox(height: 10),
               Divider(),
               const SizedBox(height: 4),
@@ -68,7 +68,7 @@ class ItemsDetailsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5)),
                       child: const Text(' Price: ',
                           style: TextStyle(fontSize: 16))),
-                  Text("${data.price}")
+                  Text(data.price)
                 ]),
                 const Spacer(),
                 Row(children: [
@@ -81,7 +81,7 @@ class ItemsDetailsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5)),
                       child: const Text(' Size: ',
                           style: TextStyle(fontSize: 16))),
-                  Text("${data.size}")
+                  Text(data.size)
                 ])
               ]),
               Divider(),
