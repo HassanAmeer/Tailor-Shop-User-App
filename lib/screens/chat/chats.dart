@@ -547,7 +547,7 @@ class _ChatsPageState extends State<ChatsPage> {
                                                 BorderRadius.circular(50),
                                             child: Icon(Icons.attach_file,
                                                 color: AppColors.primaryColor)),
-                                        SizedBox(width: 10),
+                                        SizedBox(width: 8),
                                         InkWell(
                                             onTap: () {
                                               _pickImage(p,

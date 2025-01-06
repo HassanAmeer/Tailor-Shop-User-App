@@ -8,7 +8,6 @@ import 'package:tailershop/constants/appColors.dart';
 import 'package:tailershop/provider/auth.dart';
 import 'package:tailershop/screens/itemDetails.dart';
 import 'package:tailershop/widgets/logout.dart';
-
 import '../constants/appImages.dart';
 import '../widgets/dotloader.dart';
 import 'chat/chats.dart';
