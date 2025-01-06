@@ -276,7 +276,68 @@ _messageController.clear();
                                                                           .orange),
                                                               placeholder: (context, url) =>
                                                                   const CircularProgressIndicator.adaptive(strokeWidth: 2))))),
-                                              BubbleSpecialOne(
+                                              chat['voice']
+                                                              .toString()
+                                                              .toNullString() !=
+                                                          ""
+                                                      ? SizedBox(
+                                                          width: MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                          child: VoiceWidget(
+
+
+      color: Colors
+                                                              .orange.shade100,
+                                                          isSender: false,
+                                                              url: chat['voice']
+                                                                  .toString()
+                                                                  .toNullString()))
+                                                      : chat['file']
+                                                                  .toString()
+                                                                  .toNullString() !=
+                                                              ""
+                                                          ? SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.45,
+                                                              height: 120,
+                                                              child:
+                                                                  BubbleNormalImage(
+                                                                id: '12',
+                                                                image:
+                                                                    CachedNetworkImage(
+                                                                  fit: BoxFit
+                                                                      .contain,
+                                                                  imageUrl: chat[
+                                                                          'file']
+                                                                      .toString()
+                                                                      .toNullString(),
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      const Icon(
+                                                                          Icons
+                                                                              .image,
+                                                                          color:
+                                                                              Colors.purpleAccent),
+                                                                  placeholder: (context,
+                                                                          url) =>
+                                                                      const DotLoader(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                ),
+                                                                color:  Colors
+                                                              .orange.shade100,
+                                                          isSender: false,
+                                                                tail: true,
+                                                                delivered: true,
+                                                              ),
+                                                            )
+                                                          :  BubbleSpecialOne(
                                                   text: chat['msg'].toString(),
                                                   isSender: false,
                                                   color: Colors.orange.shade100,
@@ -305,6 +366,8 @@ _messageController.clear();
                                                                   .width *
                                                               0.8,
                                                           child: VoiceWidget(
+                                                                  color: AppColors.primaryColor,
+                                                          isSender: true,
                                                               url: chat['voice']
                                                                   .toString()
                                                                   .toNullString()))
@@ -567,8 +630,15 @@ _messageController.clear();
 }
 
 class VoiceWidget extends StatefulWidget {
+  final bool isSender;
+  final Color color;
   final String url;
-  const VoiceWidget({super.key, required this.url});
+  const VoiceWidget({
+    super.key,
+    required this.url,
+    this.isSender = false,
+    this.color = const Color.fromARGB(255, 255, 224, 178),
+  });
 
   @override
   State<VoiceWidget> createState() => _VoiceWidgetState();
@@ -650,7 +720,8 @@ class _VoiceWidgetState extends State<VoiceWidget> {
   @override
   Widget build(BuildContext context) {
     return BubbleNormalAudio(
-      color: Color(0xFFE8E8EE),
+      color: widget.color,
+
       duration: duration / 1000, // Pass the total duration
       position: position / 1000, // Pass the current position
       isPlaying: isPlaying,
@@ -665,6 +736,7 @@ class _VoiceWidgetState extends State<VoiceWidget> {
         play(widget.url);
       },
       sent: true,
+      isSender: widget.isSender,
     );
   }
 }
