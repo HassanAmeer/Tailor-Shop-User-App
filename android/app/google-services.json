@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "102183749136",
+    "firebase_url": "https://tailorshop-786-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tailorshop-786",
+    "storage_bucket": "tailorshop-786.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102183749136:android:2ea5ad04edc4db617f2c95",
+        "android_client_info": {
+          "package_name": "com.tailor.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikLQYyAyn1CgRrx_lWwA9Og351XEt89w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102183749136:android:2b203cb206853c317f2c95",
+        "android_client_info": {
+          "package_name": "com.tailor.shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikLQYyAyn1CgRrx_lWwA9Og351XEt89w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
