@@ -247,7 +247,7 @@ class AuthVm with ChangeNotifier {
       "https://github.com/HassanAmeer/Emergency-Flutter-App/blob/main/logo.png";
   String splash_icon =
       "https://github.com/HassanAmeer/Emergency-Flutter-App/blob/main/textlogo.png";
-  String app_name = "Tailor";
+  String app_name = "Three Star World";
 
   List<IntroDataModel> introData = [
     IntroDataModel(

@@ -72,13 +72,16 @@ class _HomePageState extends State<HomePage> {
                       .shimmer(
                           color: Colors.grey.withOpacity(0.7),
                           duration: const Duration(seconds: 2)),
-                  Text(p.app_name.toString(),
-                          style: GoogleFonts.praise(
-                              fontSize: 30, color: Colors.white))
-                      .animate(onPlay: (controller) => controller.repeat())
-                      .shimmer(
-                          color: Colors.grey.withOpacity(0.7),
-                          duration: const Duration(seconds: 2))
+                  SizedBox(
+                    width: 110,
+                    child: Text(p.app_name.toString(),
+                            style: GoogleFonts.praise(
+                                fontSize: 27, color: Colors.white))
+                        .animate(onPlay: (controller) => controller.repeat())
+                        .shimmer(
+                            color: Colors.grey.withOpacity(0.7),
+                            duration: const Duration(seconds: 2)),
+                  )
                 ])),
             ListTile(
                 leading: const Icon(Icons.person_4_sharp, color: Colors.grey),

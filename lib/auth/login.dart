@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               automaticallyImplyLeading: false,
               backgroundColor: AppColors.primaryColor,
               title:
-                  const Text('Tailor', style: TextStyle(color: Colors.white))),
+                  const Text('Three Star World', style: TextStyle(color: Colors.white))),
           body: Center(
               child: Padding(
                   padding: const EdgeInsets.all(16.0),

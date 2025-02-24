@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: "Tailor App",
+        title: "Three Star World",
         theme: ThemeData(
             appBarTheme: AppBarTheme(
               backgroundColor: AppColors.primaryColor,
