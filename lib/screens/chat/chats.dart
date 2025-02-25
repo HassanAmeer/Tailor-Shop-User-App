@@ -1,3 +1,4 @@
+import 'package:ThreeStarWorld/helpers/nullables.dart';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:tailershop/constants/appColors.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:tailershop/helpers/nullables.dart';
 import 'package:waveform_recorder/waveform_recorder.dart';
+import '../../constants/appColors.dart';
 import '../../constants/appImages.dart';
 import '../../provider/auth.dart';
 import '../../widgets/dotloader.dart';
@@ -54,13 +54,14 @@ class _ChatsPageState extends State<ChatsPage> {
       "uid": p.userProfile.uid,
       "profileImage": p.userProfile.profileImage,
     });
-_messageController.clear();
- if (_chatScrollController.hasClients) {
-      _chatScrollController
-          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
+    _messageController.clear();
+    if (_chatScrollController.hasClients) {
+      _chatScrollController.animateTo(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          _chatScrollController.position.maxScrollExtent);
     }
-    setState(() { });
-
+    setState(() {});
   }
 
   syncFirstF() async {
@@ -139,10 +140,12 @@ _messageController.clear();
                       "uid": p.userProfile.uid,
                       "profileImage": p.userProfile.profileImage,
                     });
-                     if (_chatScrollController.hasClients) {
-      _chatScrollController
-          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
-    }
+                    if (_chatScrollController.hasClients) {
+                      _chatScrollController.animateTo(
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                          _chatScrollController.position.maxScrollExtent);
+                    }
                   },
                   child: Text('yes')),
             ],
@@ -150,7 +153,6 @@ _messageController.clear();
             insetAnimationDuration: const Duration(seconds: 2),
           );
         });
-        
   }
 
   WaveformRecorderController waveController = WaveformRecorderController();
@@ -279,76 +281,78 @@ _messageController.clear();
                                                               placeholder: (context, url) =>
                                                                   const CircularProgressIndicator.adaptive(strokeWidth: 2))))),
                                               chat['voice']
+                                                          .toString()
+                                                          .toNullString() !=
+                                                      ""
+                                                  ? SizedBox(
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.8,
+                                                      child: VoiceWidget(
+                                                          color: Colors
+                                                              .orange.shade100,
+                                                          isSender: false,
+                                                          url: chat['voice']
+                                                              .toString()
+                                                              .toNullString()))
+                                                  : chat['file']
                                                               .toString()
                                                               .toNullString() !=
                                                           ""
                                                       ? SizedBox(
-                                                          width: MediaQuery.of(context)
+                                                          width: MediaQuery.of(
+                                                                      context)
                                                                   .size
                                                                   .width *
-                                                              0.8,
-                                                          child: VoiceWidget(
-
-
-      color: Colors
-                                                              .orange.shade100,
-                                                          isSender: false,
-                                                              url: chat['voice']
+                                                              0.45,
+                                                          height: 120,
+                                                          child:
+                                                              BubbleNormalImage(
+                                                            id: '12',
+                                                            image:
+                                                                CachedNetworkImage(
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                              imageUrl: chat[
+                                                                      'file']
                                                                   .toString()
-                                                                  .toNullString()))
-                                                      : chat['file']
-                                                                  .toString()
-                                                                  .toNullString() !=
-                                                              ""
-                                                          ? SizedBox(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.45,
-                                                              height: 120,
-                                                              child:
-                                                                  BubbleNormalImage(
-                                                                id: '12',
-                                                                image:
-                                                                    CachedNetworkImage(
-                                                                  fit: BoxFit
-                                                                      .contain,
-                                                                  imageUrl: chat[
-                                                                          'file']
-                                                                      .toString()
-                                                                      .toNullString(),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .image,
-                                                                          color:
-                                                                              Colors.purpleAccent),
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      const DotLoader(
-                                                                          color:
-                                                                              Colors.grey),
-                                                                ),
-                                                                color:  Colors
-                                                              .orange.shade100,
+                                                                  .toNullString(),
+                                                              errorWidget: (context,
+                                                                      url,
+                                                                      error) =>
+                                                                  const Icon(
+                                                                      Icons
+                                                                          .image,
+                                                                      color: Colors
+                                                                          .purpleAccent),
+                                                              placeholder: (context,
+                                                                      url) =>
+                                                                  const DotLoader(
+                                                                      color: Colors
+                                                                          .grey),
+                                                            ),
+                                                            color: Colors.orange
+                                                                .shade100,
+                                                            isSender: false,
+                                                            tail: true,
+                                                            delivered: true,
+                                                          ),
+                                                        )
+                                                      : BubbleSpecialOne(
+                                                          text: chat['msg']
+                                                              .toString(),
                                                           isSender: false,
-                                                                tail: true,
-                                                                delivered: true,
-                                                              ),
-                                                            )
-                                                          :  BubbleSpecialOne(
-                                                  text: chat['msg'].toString(),
-                                                  isSender: false,
-                                                  color: Colors.orange.shade100,
-                                                  textStyle: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      fontWeight:
-                                                          FontWeight.normal))
+                                                          color: Colors
+                                                              .orange.shade100,
+                                                          textStyle: const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontStyle: FontStyle
+                                                                  .italic,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal))
                                             ])
                                       : (chat["uid"] == p.userProfile.uid &&
                                               chat["from"] == "user")
@@ -358,9 +362,7 @@ _messageController.clear();
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                  chat['voice']
-                                                              .toString()
-                                                              .toNullString() !=
+                                                  chat['voice'].toString().toNullString() !=
                                                           ""
                                                       ? SizedBox(
                                                           width: MediaQuery.of(context)
@@ -368,8 +370,9 @@ _messageController.clear();
                                                                   .width *
                                                               0.8,
                                                           child: VoiceWidget(
-                                                                  color: AppColors.primaryColor,
-                                                          isSender: true,
+                                                              color: AppColors
+                                                                  .primaryColor,
+                                                              isSender: true,
                                                               url: chat['voice']
                                                                   .toString()
                                                                   .toNullString()))
@@ -625,8 +628,10 @@ _messageController.clear();
       debugPrint("💥 when voice uploading $e $st");
     }
     if (_chatScrollController.hasClients) {
-      _chatScrollController
-          .animateTo(duration: Duration(milliseconds: 200), curve: Curves.easeInOut, _chatScrollController.position.maxScrollExtent);
+      _chatScrollController.animateTo(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          _chatScrollController.position.maxScrollExtent);
     }
   }
 }

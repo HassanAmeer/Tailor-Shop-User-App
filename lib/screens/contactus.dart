@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tailershop/constants/appColors.dart';
-import 'package:tailershop/provider/auth.dart';
+import '../constants/appColors.dart';
+import '../provider/auth.dart';
 import 'package:direct_call_plus/direct_call_plus.dart';
 
 class ContactUsPage extends StatelessWidget {

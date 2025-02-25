@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tailershop/models/itemModel.dart';
 
 import '../constants/appColors.dart';
+import '../models/itemModel.dart';
 import 'chat/chats.dart';
 
 class ItemsDetailsPage extends StatelessWidget {

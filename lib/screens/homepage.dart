@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tailershop/auth/editprofile.dart';
-import 'package:tailershop/constants/appColors.dart';
-import 'package:tailershop/provider/auth.dart';
-import 'package:tailershop/screens/itemDetails.dart';
-import 'package:tailershop/widgets/logout.dart';
+import '../auth/editprofile.dart';
+import '../constants/appColors.dart';
 import '../constants/appImages.dart';
+import '../provider/auth.dart';
 import '../widgets/dotloader.dart';
+import '../widgets/logout.dart';
 import 'chat/chats.dart';
 import 'contactus.dart';
+import 'itemDetails.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

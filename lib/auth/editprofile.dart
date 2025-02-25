@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tailershop/constants/appColors.dart';
-import 'package:tailershop/constants/appImages.dart';
-import 'package:tailershop/widgets/logout.dart';
+import '../constants/appColors.dart';
+import '../constants/appImages.dart';
+import '../widgets/logout.dart';
 import '../../widgets/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import '../constants/appColors.dart';
 import '../screens/homepage.dart';
 
 import '../widgets/toast.dart';

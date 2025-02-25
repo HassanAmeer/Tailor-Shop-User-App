@@ -3,8 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:tailershop/helpers/nullables.dart';
-import 'package:tailershop/screens/homepage.dart';
+import '../helpers/nullables.dart';
+import '../screens/homepage.dart';
 
 import '../auth/login.dart';
 import '../constants/appColors.dart';

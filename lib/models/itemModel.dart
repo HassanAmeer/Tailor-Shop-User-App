@@ -1,4 +1,4 @@
-import 'package:tailershop/helpers/nullables.dart';
+import 'package:ThreeStarWorld/helpers/nullables.dart';
 
 class ItemModel {
   String title;

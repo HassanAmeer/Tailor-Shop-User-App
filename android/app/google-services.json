@@ -8,9 +8,28 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:102183749136:android:2b203cb206853c317f2c95",
+        "mobilesdk_app_id": "1:102183749136:android:2ea5ad04edc4db617f2c95",
         "android_client_info": {
-          "package_name": "com.tailor.shop"
+          "package_name": "com.tailor.admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikLQYyAyn1CgRrx_lWwA9Og351XEt89w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102183749136:android:32a5d46e0f9ef9cf7f2c95",
+        "android_client_info": {
+          "package_name": "com.three.starworld"
         }
       },
       "oauth_client": [],

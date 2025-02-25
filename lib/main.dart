@@ -115,8 +115,33 @@ void configLoading() {
 
 
 
-
+// bundle id
+// com.three.starworld
 
 // Platform  Firebase App Id
 // android   1:102183749136:android:2b203cb206853c317f2c95
 // ios       1:102183749136:ios:18b2965581fcacc27f2c95
+
+
+///////// play store setups
+///
+// Three Star World
+
+// Explore, shop, and experience the world of Three Star like never before!
+
+// Welcome to Three Star World, your ultimate platform for discovering premium products and services. Our app offers a seamless experience for browsing, purchasing, and engaging with exclusive collections. Whether you're looking for the latest trends, top-tier services, or personalized recommendations, Three Star World brings everything to your fingertips.
+
+// Key Highlights:
+// ✔️ Intuitive and user-friendly interface
+// ✔️ Seamless navigation for a smooth shopping experience
+// ✔️ Exclusive deals, discounts, and promotions
+// ✔️ Secure payment options for hassle-free transactions
+// ✔️ Personalized recommendations based on your preferences
+// ✔️ Reliable customer support to assist with your queries
+
+// Join Three Star World today and elevate your shopping experience!
+
+// policy
+// https://doc-hosting.flycricket.io/three-star-world-privacy-policy/58579872-5ef5-4f78-b5a0-4c2c1a17fe2e/privacy
+// delete account
+// https://form.jotform.com/250351650590048

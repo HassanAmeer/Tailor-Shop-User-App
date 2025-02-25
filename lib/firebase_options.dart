@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAikLQYyAyn1CgRrx_lWwA9Og351XEt89w',
-    appId: '1:102183749136:android:2b203cb206853c317f2c95',
+    appId: '1:102183749136:android:32a5d46e0f9ef9cf7f2c95',
     messagingSenderId: '102183749136',
     projectId: 'tailorshop-786',
     databaseURL: 'https://tailorshop-786-default-rtdb.asia-southeast1.firebasedatabase.app',
@@ -60,11 +60,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAsBgJ89Jvr_cLB-GPjzqhneS_r_ViUTmM',
-    appId: '1:102183749136:ios:18b2965581fcacc27f2c95',
+    appId: '1:102183749136:ios:f56da7739c2f5eeb7f2c95',
     messagingSenderId: '102183749136',
     projectId: 'tailorshop-786',
     databaseURL: 'https://tailorshop-786-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'tailorshop-786.firebasestorage.app',
-    iosBundleId: 'com.tailor.shop',
+    iosBundleId: 'com.three.starworld',
   );
+
 }
