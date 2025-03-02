@@ -184,7 +184,8 @@ class _ChatsPageState extends State<ChatsPage> {
               backgroundColor: AppColors.primaryColor,
               elevation: 0),
           body: Column(children: [
-            Expanded(
+            SizedBox(
+                height: MediaQuery.of(context).size.height * 0.77,
                 child: StreamBuilder(
                     stream: _dbRef
                         .orderByChild("timestamp")
@@ -476,7 +477,8 @@ class _ChatsPageState extends State<ChatsPage> {
                     })),
             Padding(
                 padding: const EdgeInsets.all(14),
-                child: Expanded(
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
                     child: ListenableBuilder(
                         listenable: waveController,
                         builder: (context, _) => TextField(
