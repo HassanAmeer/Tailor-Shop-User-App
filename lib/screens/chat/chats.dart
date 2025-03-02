@@ -167,409 +167,404 @@ class _ChatsPageState extends State<ChatsPage> {
   Widget build(BuildContext context) {
     return Consumer<AuthVm>(builder: (context, p, c) {
       return Scaffold(
-          appBar: AppBar(
-              leading: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
-              title: const Text('Live Chats',
-                  style: TextStyle(color: Colors.white, fontSize: 24)),
-              actions: [
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Image.asset(AppImages.chatIcon,
-                        color: AppColors.primaryColor.shade100))
-              ],
-              backgroundColor: AppColors.primaryColor,
-              elevation: 0),
-          body: Column(children: [
-            SizedBox(
-                height: MediaQuery.of(context).size.height * 0.77,
-                child: StreamBuilder(
-                    stream: _dbRef
-                        .orderByChild("timestamp")
-                        // .equalTo(p.userProfile.uid, key: "uid")
-                        .onValue,
-                    // stream: _dbRef.orderByChild("timestamp").onValue,
-                    builder: (context, snapshot) {
-                      // if (snapshot.connectionState == ConnectionState.waiting) {
-                      //   return Center(
-                      //       child: DotLoader(
-                      //           color: AppColors.primaryColor.shade100));
-                      // }
+        appBar: AppBar(
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
+            title: const Text('Live Chats',
+                style: TextStyle(color: Colors.white, fontSize: 24)),
+            actions: [
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Image.asset(AppImages.chatIcon,
+                      color: AppColors.primaryColor.shade100))
+            ],
+            backgroundColor: AppColors.primaryColor,
+            elevation: 0),
+        body: Column(children: [
+          SizedBox(
+              height: MediaQuery.of(context).size.height * 0.77,
+              child: StreamBuilder(
+                  stream: _dbRef
+                      .orderByChild("timestamp")
+                      // .equalTo(p.userProfile.uid, key: "uid")
+                      .onValue,
+                  // stream: _dbRef.orderByChild("timestamp").onValue,
+                  builder: (context, snapshot) {
+                    // if (snapshot.connectionState == ConnectionState.waiting) {
+                    //   return Center(
+                    //       child: DotLoader(
+                    //           color: AppColors.primaryColor.shade100));
+                    // }
 
-                      if (snapshot.hasData && snapshot.data != null) {
-                        final data = (snapshot.data!).snapshot.value
-                            as Map<dynamic, dynamic>?;
+                    if (snapshot.hasData && snapshot.data != null) {
+                      final data = (snapshot.data!).snapshot.value
+                          as Map<dynamic, dynamic>?;
 
-                        if (data == null) {
-                          return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.7,
-                                    child: Image.asset(AppImages.chatIcon,
-                                        color: AppColors.primaryColor.shade100,
-                                        opacity:
-                                            const AlwaysStoppedAnimation(0.3))),
-                                const Center(
-                                    child: Text("No messages yet",
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold)))
-                              ])
-                              .animate(
-                                  delay: 500.ms,
-                                  onPlay: (controller) => controller.repeat())
-                              .shimmer(
-                                  duration: const Duration(milliseconds: 1500),
-                                  delay: const Duration(milliseconds: 1000))
-                              .shimmer(
-                                  color: AppColors.primaryColor.shade100
-                                      .withOpacity(0.3),
-                                  duration: const Duration(milliseconds: 1500),
-                                  curve: Curves.easeInOut);
-                        }
-
-                        final messages = data.entries.toList()
-                          ..sort((a, b) => a.value["timestamp"]
-                              .compareTo(b.value["timestamp"]));
-
-                        return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ListView.builder(
-                                controller: _chatScrollController,
-                                itemCount: messages.length,
-                                itemBuilder: (context, index) {
-                                  final chat = messages[index].value;
-                                  final isAdmin =
-                                      chat["uid"] == p.userProfile.uid &&
-                                          chat["from"] == "admin";
-
-                                  return isAdmin
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                              InkWell(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  onTap: () {},
-                                                  child: CircleAvatar(
-                                                      backgroundColor: Colors
-                                                          .orange.shade100
-                                                          .withOpacity(0.6),
-                                                      child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  50),
-                                                          child: CachedNetworkImage(
-                                                              fit: BoxFit.cover,
-                                                              width: 37,
-                                                              height: 37,
-                                                              imageUrl:
-                                                                  "https://www.creativefabrica.com/wp-content/uploads/2021/06/02/Admin-Roles-Icon-Graphics-12796525-1.jpg",
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  const Icon(Icons.person_4,
-                                                                      color: Colors
-                                                                          .orange),
-                                                              placeholder: (context, url) =>
-                                                                  const CircularProgressIndicator.adaptive(strokeWidth: 2))))),
-                                              chat['voice']
-                                                          .toString()
-                                                          .toNullString() !=
-                                                      ""
-                                                  ? SizedBox(
-                                                      width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.8,
-                                                      child: VoiceWidget(
-                                                          color: Colors
-                                                              .orange.shade100,
-                                                          isSender: false,
-                                                          url: chat['voice']
-                                                              .toString()
-                                                              .toNullString()))
-                                                  : chat['file']
-                                                              .toString()
-                                                              .toNullString() !=
-                                                          ""
-                                                      ? SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.45,
-                                                          height: 120,
-                                                          child:
-                                                              BubbleNormalImage(
-                                                            id: '12',
-                                                            image:
-                                                                CachedNetworkImage(
-                                                              fit: BoxFit
-                                                                  .contain,
-                                                              imageUrl: chat[
-                                                                      'file']
-                                                                  .toString()
-                                                                  .toNullString(),
-                                                              errorWidget: (context,
-                                                                      url,
-                                                                      error) =>
-                                                                  const Icon(
-                                                                      Icons
-                                                                          .image,
-                                                                      color: Colors
-                                                                          .purpleAccent),
-                                                              placeholder: (context,
-                                                                      url) =>
-                                                                  const DotLoader(
-                                                                      color: Colors
-                                                                          .grey),
-                                                            ),
-                                                            color: Colors.orange
-                                                                .shade100,
-                                                            isSender: false,
-                                                            tail: true,
-                                                            delivered: true,
-                                                          ),
-                                                        )
-                                                      : BubbleSpecialOne(
-                                                          text: chat['msg']
-                                                              .toString(),
-                                                          isSender: false,
-                                                          color: Colors
-                                                              .orange.shade100,
-                                                          textStyle: const TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontStyle: FontStyle
-                                                                  .italic,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal))
-                                            ])
-                                      : (chat["uid"] == p.userProfile.uid &&
-                                              chat["from"] == "user")
-                                          ? Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                  chat['voice'].toString().toNullString() !=
-                                                          ""
-                                                      ? SizedBox(
-                                                          width: MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.8,
-                                                          child: VoiceWidget(
-                                                              color: AppColors
-                                                                  .primaryColor,
-                                                              isSender: true,
-                                                              url: chat['voice']
-                                                                  .toString()
-                                                                  .toNullString()))
-                                                      : chat['file']
-                                                                  .toString()
-                                                                  .toNullString() !=
-                                                              ""
-                                                          ? SizedBox(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.45,
-                                                              height: 120,
-                                                              child:
-                                                                  BubbleNormalImage(
-                                                                id: '12',
-                                                                image:
-                                                                    CachedNetworkImage(
-                                                                  fit: BoxFit
-                                                                      .contain,
-                                                                  imageUrl: chat[
-                                                                          'file']
-                                                                      .toString()
-                                                                      .toNullString(),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .image,
-                                                                          color:
-                                                                              Colors.purpleAccent),
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      const DotLoader(
-                                                                          color:
-                                                                              Colors.grey),
-                                                                ),
-                                                                color: AppColors
-                                                                    .primaryColor
-                                                                    .shade100,
-                                                                isSender: true,
-                                                                tail: true,
-                                                                delivered: true,
-                                                              ),
-                                                            )
-                                                          : BubbleSpecialOne(
-                                                              text: chat['msg']
-                                                                  .toString(),
-                                                              isSender: true,
-                                                              color: AppColors
-                                                                  .primaryColor
-                                                                  .shade100
-                                                                  .withOpacity(
-                                                                      0.6),
-                                                              textStyle: TextStyle(
-                                                                  color: AppColors
-                                                                      .primaryColor
-                                                                      .shade700,
-                                                                  fontStyle: FontStyle.italic,
-                                                                  fontWeight: FontWeight.bold)),
-                                                  InkWell(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                      onTap: () {},
-                                                      child: CircleAvatar(
-                                                          backgroundColor: AppColors
-                                                              .primaryColor
-                                                              .shade100
-                                                              .withOpacity(0.6),
-                                                          child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      50),
-                                                              child: CachedNetworkImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  width: 37,
-                                                                  height: 37,
-                                                                  imageUrl: context
-                                                                          .read<
-                                                                              AuthVm>()
-                                                                          .userProfile
-                                                                          .profileImage
-                                                                          .isEmpty
-                                                                      ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq3t9dFOmI3lGU6fDJmGn3cagEbJwaqiOi9YKw1lyGxGZ_T1QLEx7-hlt5DpVd-vDEBb8&usqp=CAU"
-                                                                      : context
-                                                                          .read<AuthVm>()
-                                                                          .userProfile
-                                                                          .profileImage,
-                                                                  errorWidget: (context, url, error) => const Icon(Icons.person, color: AppColors.primaryColor),
-                                                                  placeholder: (context, url) => const CircularProgressIndicator.adaptive(strokeWidth: 2)))))
-                                                ])
-                                          : SizedBox.shrink();
-                                }));
+                      if (data == null) {
+                        return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Image.asset(AppImages.chatIcon,
+                                      color: AppColors.primaryColor.shade100,
+                                      opacity:
+                                          const AlwaysStoppedAnimation(0.3))),
+                              const Center(
+                                  child: Text("No messages yet",
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)))
+                            ])
+                            .animate(
+                                delay: 500.ms,
+                                onPlay: (controller) => controller.repeat())
+                            .shimmer(
+                                duration: const Duration(milliseconds: 1500),
+                                delay: const Duration(milliseconds: 1000))
+                            .shimmer(
+                                color: AppColors.primaryColor.shade100
+                                    .withOpacity(0.3),
+                                duration: const Duration(milliseconds: 1500),
+                                curve: Curves.easeInOut);
                       }
 
-                      return const Center(child: Text(""));
-                    })),
-            Padding(
-                padding: const EdgeInsets.all(14),
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ListenableBuilder(
-                        listenable: waveController,
-                        builder: (context, _) => TextField(
-                            controller: _messageController,
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: waveController.isRecording
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(width: 20),
-                                        InkWell(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            onTap: () {
-                                              waveController.stopRecording();
-                                              isCanceled = true;
-                                            },
-                                            child: const Icon(
-                                              Icons.cancel,
-                                              color: AppColors.primaryColor,
-                                            )),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.65,
-                                          child: WaveformRecorder(
-                                              height: 48,
-                                              controller: waveController,
-                                              onRecordingStopped: () {
-                                                onRecordingStopped(p);
-                                              }),
-                                        )
-                                      ],
+                      final messages = data.entries.toList()
+                        ..sort((a, b) => a.value["timestamp"]
+                            .compareTo(b.value["timestamp"]));
+
+                      return Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ListView.builder(
+                              controller: _chatScrollController,
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                final chat = messages[index].value;
+                                final isAdmin =
+                                    chat["uid"] == p.userProfile.uid &&
+                                        chat["from"] == "admin";
+
+                                return isAdmin
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                            InkWell(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                onTap: () {},
+                                                child: CircleAvatar(
+                                                    backgroundColor: Colors
+                                                        .orange.shade100
+                                                        .withOpacity(0.6),
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                50),
+                                                        child: CachedNetworkImage(
+                                                            fit: BoxFit.cover,
+                                                            width: 37,
+                                                            height: 37,
+                                                            imageUrl:
+                                                                "https://www.creativefabrica.com/wp-content/uploads/2021/06/02/Admin-Roles-Icon-Graphics-12796525-1.jpg",
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                const Icon(Icons.person_4,
+                                                                    color: Colors
+                                                                        .orange),
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    const CircularProgressIndicator.adaptive(strokeWidth: 2))))),
+                                            chat['voice']
+                                                        .toString()
+                                                        .toNullString() !=
+                                                    ""
+                                                ? SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                    child: VoiceWidget(
+                                                        color: Colors
+                                                            .orange.shade100,
+                                                        isSender: false,
+                                                        url: chat['voice']
+                                                            .toString()
+                                                            .toNullString()))
+                                                : chat['file']
+                                                            .toString()
+                                                            .toNullString() !=
+                                                        ""
+                                                    ? SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.45,
+                                                        height: 120,
+                                                        child:
+                                                            BubbleNormalImage(
+                                                          id: '12',
+                                                          image:
+                                                              CachedNetworkImage(
+                                                            fit: BoxFit.contain,
+                                                            imageUrl: chat[
+                                                                    'file']
+                                                                .toString()
+                                                                .toNullString(),
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                const Icon(
+                                                                    Icons.image,
+                                                                    color: Colors
+                                                                        .purpleAccent),
+                                                            placeholder: (context,
+                                                                    url) =>
+                                                                const DotLoader(
+                                                                    color: Colors
+                                                                        .grey),
+                                                          ),
+                                                          color: Colors
+                                                              .orange.shade100,
+                                                          isSender: false,
+                                                          tail: true,
+                                                          delivered: true,
+                                                        ),
+                                                      )
+                                                    : BubbleSpecialOne(
+                                                        text: chat['msg']
+                                                            .toString(),
+                                                        isSender: false,
+                                                        color: Colors
+                                                            .orange.shade100,
+                                                        textStyle: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontStyle: FontStyle
+                                                                .italic,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal))
+                                          ])
+                                    : (chat["uid"] == p.userProfile.uid &&
+                                            chat["from"] == "user")
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                                chat['voice'].toString().toNullString() !=
+                                                        ""
+                                                    ? SizedBox(
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
+                                                        child: VoiceWidget(
+                                                            color: AppColors
+                                                                .primaryColor,
+                                                            isSender: true,
+                                                            url: chat['voice']
+                                                                .toString()
+                                                                .toNullString()))
+                                                    : chat['file']
+                                                                .toString()
+                                                                .toNullString() !=
+                                                            ""
+                                                        ? SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.45,
+                                                            height: 120,
+                                                            child:
+                                                                BubbleNormalImage(
+                                                              id: '12',
+                                                              image:
+                                                                  CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                                imageUrl: chat[
+                                                                        'file']
+                                                                    .toString()
+                                                                    .toNullString(),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    const Icon(
+                                                                        Icons
+                                                                            .image,
+                                                                        color: Colors
+                                                                            .purpleAccent),
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const DotLoader(
+                                                                        color: Colors
+                                                                            .grey),
+                                                              ),
+                                                              color: AppColors
+                                                                  .primaryColor
+                                                                  .shade100,
+                                                              isSender: true,
+                                                              tail: true,
+                                                              delivered: true,
+                                                            ),
+                                                          )
+                                                        : BubbleSpecialOne(
+                                                            text: chat['msg']
+                                                                .toString(),
+                                                            isSender: true,
+                                                            color: AppColors
+                                                                .primaryColor
+                                                                .shade100
+                                                                .withOpacity(
+                                                                    0.6),
+                                                            textStyle: TextStyle(
+                                                                color: AppColors
+                                                                    .primaryColor
+                                                                    .shade700,
+                                                                fontStyle: FontStyle.italic,
+                                                                fontWeight: FontWeight.bold)),
+                                                InkWell(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    onTap: () {},
+                                                    child: CircleAvatar(
+                                                        backgroundColor: AppColors
+                                                            .primaryColor
+                                                            .shade100
+                                                            .withOpacity(0.6),
+                                                        child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    50),
+                                                            child: CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                width: 37,
+                                                                height: 37,
+                                                                imageUrl: context
+                                                                        .read<
+                                                                            AuthVm>()
+                                                                        .userProfile
+                                                                        .profileImage
+                                                                        .isEmpty
+                                                                    ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSq3t9dFOmI3lGU6fDJmGn3cagEbJwaqiOi9YKw1lyGxGZ_T1QLEx7-hlt5DpVd-vDEBb8&usqp=CAU"
+                                                                    : context
+                                                                        .read<AuthVm>()
+                                                                        .userProfile
+                                                                        .profileImage,
+                                                                errorWidget: (context, url, error) => const Icon(Icons.person, color: AppColors.primaryColor),
+                                                                placeholder: (context, url) => const CircularProgressIndicator.adaptive(strokeWidth: 2)))))
+                                              ])
+                                        : SizedBox.shrink();
+                              }));
+                    }
+
+                    return const Center(child: Text(""));
+                  })),
+        ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50)),
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: ListenableBuilder(
+                    listenable: waveController,
+                    builder: (context, _) => TextField(
+                        controller: _messageController,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: waveController.isRecording
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(width: 20),
+                                    InkWell(
+                                        borderRadius: BorderRadius.circular(50),
+                                        onTap: () {
+                                          waveController.stopRecording();
+                                          isCanceled = true;
+                                        },
+                                        child: const Icon(
+                                          Icons.cancel,
+                                          color: AppColors.primaryColor,
+                                        )),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.65,
+                                      child: WaveformRecorder(
+                                          height: 48,
+                                          controller: waveController,
+                                          onRecordingStopped: () {
+                                            onRecordingStopped(p);
+                                          }),
                                     )
-                                  : Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SizedBox(width: 10),
-                                        InkWell(
-                                            onTap: () {
-                                              _pickImage(p,
-                                                  isFromGallery: true);
-                                            },
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Icon(Icons.attach_file,
-                                                color: AppColors.primaryColor)),
-                                        SizedBox(width: 8),
-                                        InkWell(
-                                            onTap: () {
-                                              _pickImage(p,
-                                                  isFromGallery: false);
-                                            },
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Icon(
-                                                Icons.camera_alt_outlined,
-                                                color: AppColors.primaryColor)),
-                                        SizedBox(width: 10),
-                                      ],
-                                    ),
-                              hintText: "Type a message...",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              suffixIcon: _messageController.text.isNotEmpty
-                                  ? IconButton(
-                                      icon: const Icon(Icons.send,
-                                          color: AppColors.primaryColor),
-                                      onPressed: () {
-                                        _sendMessage(p);
-                                      })
-                                  : IconButton(
-                                      icon: Icon(
-                                        waveController.isRecording
-                                            ? Icons.stop
-                                            : Icons.mic,
-                                        color: waveController.isRecording
-                                            ? Colors.grey
-                                            : AppColors.primaryColor,
-                                      ),
-                                      onPressed: toggleRecording),
-                            )))))
-          ]));
+                                  ],
+                                )
+                              : Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(width: 10),
+                                    InkWell(
+                                        onTap: () {
+                                          _pickImage(p, isFromGallery: true);
+                                        },
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Icon(Icons.attach_file,
+                                            color: AppColors.primaryColor)),
+                                    SizedBox(width: 8),
+                                    InkWell(
+                                        onTap: () {
+                                          _pickImage(p, isFromGallery: false);
+                                        },
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Icon(Icons.camera_alt_outlined,
+                                            color: AppColors.primaryColor)),
+                                    SizedBox(width: 10),
+                                  ],
+                                ),
+                          hintText: "Type a message...",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          suffixIcon: _messageController.text.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.send,
+                                      color: AppColors.primaryColor),
+                                  onPressed: () {
+                                    _sendMessage(p);
+                                  })
+                              : IconButton(
+                                  icon: Icon(
+                                    waveController.isRecording
+                                        ? Icons.stop
+                                        : Icons.mic,
+                                    color: waveController.isRecording
+                                        ? Colors.grey
+                                        : AppColors.primaryColor,
+                                  ),
+                                  onPressed: toggleRecording),
+                        ))))),
+      );
     });
   }
 
