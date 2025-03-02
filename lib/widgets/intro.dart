@@ -92,8 +92,9 @@ class _IntroPageState extends State<IntroPage> {
                         child: ElevatedButton(
                             onPressed: () async {
                               await Config().setConfig(isVFirstTime: true);
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const LoginPage()));
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()));
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primaryColor,
