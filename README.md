@@ -15,8 +15,8 @@ mini uniform sell app with admin app with custom media sharing system
   <img src="demo/img2.jpeg" alt="img2" width="150" />
   <img src="demo/img3.jpeg" alt="img3" width="150" />
   <img src="demo/img4.jpeg" alt="img4" width="150" />
-  <img src="demo/img5.jpeg" alt="img5" width="150" />
   <br />
+  <img src="demo/img5.jpeg" alt="img5" width="150" />
   <img src="demo/img6.jpeg" alt="img6" width="150" />
   <img src="demo/img7.jpeg" alt="img7" width="150" />
   <img src="demo/img8.jpeg" alt="img8" width="150" />
